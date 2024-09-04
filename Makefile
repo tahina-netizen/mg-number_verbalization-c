@@ -7,6 +7,7 @@ LIB_DIR := lib
 TESTS_DIR := tests
 BIN_DIR := bin
 OBJS := $(patsubst %.c,%.o, $(wildcard $(SRC_DIR)/*.c) $(wildcard $(LIB_DIR)/**/*.c))
+OBJS_WITHOUT_MAIN := $(filter-out $(SRC_DIR)/main.o, $(OBJS))
 
 # Compiler settings
 CC := gcc
@@ -33,9 +34,9 @@ $(OBJS): dir
 	@mkdir -p $(BUILD_DIR)/$(@D)
 	@$(CC) $(CFLAGS) -o $(BUILD_DIR)/$@ -c $*.c
 
-# Run CUnit tests
+# Run tests
 test: dir
-	@$(CC) $(CFLAGS) -o $(BIN_DIR)/$(NAME)_test $(TESTS_DIR)/*.c
+	@$(CC) $(CFLAGS) -o $(BIN_DIR)/$(NAME)_test $(TESTS_DIR)/*.c $(patsubst %, build/%, $(OBJS_WITHOUT_MAIN))
 	@$(BIN_DIR)/$(NAME)_test
 
 # Setup build and bin directories
