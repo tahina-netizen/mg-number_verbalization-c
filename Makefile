@@ -13,7 +13,7 @@ OBJS_WITHOUT_MAIN := $(filter-out $(SRC_DIR)/main.o, $(OBJS))
 CC := gcc
 
 # Compiler and linker flags settings
-CFLAGS := -Wall -Wextra -pedantic
+CFLAGS := -Wall -Wextra -pedantic -I$(INCLUDE_DIR)
 LDFLAGS := -lm
 
 
